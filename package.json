@@ -1,0 +1,22 @@
+{
+  "name": "docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev app",
+    "docs:build": "vitepress build app",
+    "docs:preview": "vitepress preview app"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "latest",
+    "vitepress": "^1.6.3"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search",
+        "search-insights"
+      ]
+    }
+  }
+}
