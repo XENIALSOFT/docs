@@ -6,10 +6,10 @@ export default defineConfig({
   description: `A VitePress Site`,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    // logo: {
-    //   light: `/light.webp`,
-    //   dark: `/dark.webp`,
-    // },
+    logo: {
+      light: `/logo_light.webp`,
+      dark: `/logo_dark.webp`,
+    },
 
     nav: [
       { text: `Home`, link: `/` },
