@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "My Awesome Project"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: XENIALSOFT Inc.
+  # text: 팀의 지혜를 모아
+  tagline: Infinite Possibilities Through Knowledge Sharing.
   actions:
     - theme: brand
       text: Markdown Examples

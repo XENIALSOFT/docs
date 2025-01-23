@@ -2,27 +2,43 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "My Awesome Project",
-  description: "A VitePress Site",
+  title: `XENIALSOFT Inc.`,
+  description: `A VitePress Site`,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    // logo: {
+    //   light: `/light.webp`,
+    //   dark: `/dark.webp`,
+    // },
+
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: `Home`, link: `/` },
+      { text: `Examples`, link: `/markdown-examples` }
     ],
 
     sidebar: [
       {
-        text: 'Examples',
+        text: `Nuxt`,
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: `배포`, link: `/nuxt/deployment` },
         ]
       }
     ],
 
+    search: {
+      provider: `local`
+    },
+
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
+      { icon: `github`, link: `https://github.com/xenialsoft/docs` }
+    ],
+
+    footer: {
+      copyright: `Copyright © XENIALSOFT Inc. All rights reserved.`
+    },
+    
+  },
+
+  lastUpdated: true,
+
 })
