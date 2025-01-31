@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   ],
   i18n: {
     defaultLocale: 'ko',
-    vueI18n: './i18n.config.ts' // 이 경로는 기본값이므로 생략할 수 있습니다.
+    vueI18n: './i18n.config.ts'
   }
 })
 ```
