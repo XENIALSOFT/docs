@@ -20,7 +20,13 @@ export default defineConfig({
       {
         text: `Nuxt`,
         items: [
-          { text: `배포`, link: `/nuxt/deployment` },
+          { text: `프로덕션 배포`, link: `/nuxt/deployment` },
+          {
+            text: `모듈`,
+            items: [
+              { text: `Nuxt I18n`, link: `/nuxt/modules/nuxt-i18n` }
+            ]
+          },
         ]
       }
     ],
