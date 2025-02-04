@@ -89,6 +89,12 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     {
+      text: `스타일 가이드`,
+      items: [
+        { text: `Vue.js`, link: `/style-guide/vuejs` }
+      ]
+    },
+    {
       text: `Nuxt`,
       items: [
         { text: `애플리케이션 배포 가이드`, link: `/nuxt/deployment` },
