@@ -107,6 +107,12 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     {
+      text: `SpringBoot`,
+      items: [
+        { text: `OAuth2`, link: `/springboot/oauth2` }
+      ]
+    },
+    {
       text: `Oracle Cloud`,
       items: [
         { text: `언어 변경`, link: `/oracle-cloud/change-language` },
