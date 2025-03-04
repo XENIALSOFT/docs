@@ -20,19 +20,19 @@
 
 2. `apt`를 최신화합니다.
 
-```sh
+```bash
 sudo apt update
 ```
 
 3. `MariaDB Server` 모듈 설치
 
-```sh
+```bash
 sudo apt install mariadb-server
 ```
 
 4. `MariaDB Client` 모듈 설치
 
-```sh
+```bash
 sudo apt install mariadb-client
 ```
 
@@ -62,7 +62,7 @@ sudo apt install mariadb-client
 
 `MariaDB`에는 기본적으로 `test`라는 테스트용 데이터베이스가 설치됩니다. 이 데이터베이스는 보안상 불필요한 것이므로 `mysql_secure_installation`은 이를 제거할지 묻습니다. 이 테스트 데이터베이스를 제거하면 잠재적인 보안 위험을 줄일 수 있습니다.
 
-```sh
+```bash
 sudo mysql_secure_installation
 
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
@@ -134,7 +134,7 @@ Thanks for using MariaDB!
 
 ## MariaDB 접속
 
-```sh
+```bash
 mysql -u root -p
 ```
 
@@ -155,11 +155,11 @@ select version();
 
 ## MariaDB 상태 확인
 
-```sh
+```bash
 service mysql status
 ```
 
-```sh
+```bash
 ● mariadb.service - MariaDB 10.11.8 database server
      Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled; preset: enabled)
      Active: active (running) since Mon 2025-02-03 15:35:14 UTC; 19min ago
@@ -199,13 +199,13 @@ grant all privileges on xenialsoft.* to '계정'@'%';
 
 ## MariaDB PORT 설정
 
-```sh
+```bash
 sudo vi /etc/mysql/my.cnf
 ```
 
 `PORT` 부분의 주석을 해제한다.
 
-```sh
+```bash
 # The MariaDB configuration file
 #
 # The MariaDB/MySQL tools read configuration files in the following order:
@@ -239,13 +239,13 @@ socket = /run/mysqld/mysqld.sock
 
 ## MariaDB IP 설정
 
-```sh
+```bash
 sudo vi /etc/mysql/mariadb.conf.d/50-server.cnf
 ```
 
 `IP` 부분의 값을 `0.0.0.0`으로 수정한다.
 
-```sh
+```bash
 #
 # These groups are read by MariaDB server.
 # Use it for options that only the server (but not clients) should see
@@ -283,7 +283,7 @@ bind-address            = 0.0.0.0
 
 여기서 `ens3`는 네트워크 인터페이스입니다.
 
-```sh
+```bash
 sudo iptables -I INPUT 5 -i ens3 -p tcp --dport 3306 -m state --state NEW,ESTABLISHED -j ACCEPT
 ```
 
