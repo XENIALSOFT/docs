@@ -19,7 +19,7 @@ scp -i ./ssh-key.key nuxt-app.tar.gz [계정]@[주소]:/var/www
 2. 권한 오류 해결
 위 명령어에서 `Bad permissions` 오류가 발생하면, 관리자 권한으로 PowerShell을 열어 아래 명령어로 권한을 재조정합니다.
 
-```pwsh
+```sh
 icacls .\ssh-key-2025-02-03.key /inheritance:r
 icacls .\ssh-key-2025-02-03.key /grant:r "사용자명:R"
 ```
@@ -159,7 +159,7 @@ sudo apt install -y java-21-amazon-corretto-jdk
 
 ### 로컬에서 스프링부트 앱 빌드하기
 
-```pwsh
+```sh
 ./gradlew clean build
 
 cd build/libs
@@ -197,7 +197,7 @@ sudo certbot --nginx -d api.aforclinic.xenialsoft.com
 
     1. scp -i ./ssh-key-2025-02-03.key nuxt-app.tar.gz [계정]@[주소]:/var/www
     2. 혹시 아래와 같은 오류가 발생했다면
-    ```pwsh
+    ```sh
     Bad permissions. Try removing permissions for user: BUILTIN\\Users (S-1-5-32-545) on file ssh-key-2025-02-03.key.
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
@@ -212,7 +212,7 @@ sudo certbot --nginx -d api.aforclinic.xenialsoft.com
 
     pwsh를 관리자 권한으로 열어서
 
-    ```pwsh
+    ```sh
     icacls .\ssh-key-2025-02-03.key /inheritance:r
     icacls .\ssh-key-2025-02-03.key /grant:r "mglee:R"
     ```
@@ -338,7 +338,7 @@ sudo apt install -y java-21-amazon-corretto-jdk
 
 2. 로컬에서 스프링부트 앱 빌드하기
 
-```pwsh
+```sh
 ./gradlew clean build
 
 cd build/libs
