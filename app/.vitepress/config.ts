@@ -113,11 +113,19 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     {
+      text: `MariaDB`,
+      items: [
+        {
+          text: `설치`,
+          link: `/mariadb/installation`
+        }
+      ]
+    },
+    {
       text: `Oracle Cloud`,
       items: [
         { text: `언어 변경`, link: `/oracle-cloud/change-language` },
         { text: `인스턴스 생성`, link: `/oracle-cloud/create-instance` },
-        { text: `MariaDB 설치`, link: `/oracle-cloud/install-mariadb` },
         { text: `앱 배포`, link: `/oracle-cloud/deployment` }
       ]
     }
