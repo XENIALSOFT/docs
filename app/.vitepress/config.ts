@@ -109,8 +109,30 @@ function sidebar(): DefaultTheme.Sidebar {
           link: `/server/getting-started`
         },
         {
+          text: `타임존 변경하기`,
+          link: `/server/change-timezone`
+        },
+        {
           text: `nginx`,
-          link: `/server/nginx`
+          items: [
+            {
+              text: `시작하기`,
+              link: `/server/nginx/getting-started`
+            },
+            {
+              text: `SSL 설정`,
+              link: `/server/nginx/ssl`
+            },
+            {
+              text: `압축 설정`,
+              link: `/server/nginx/compression`
+            },
+            {
+              text: `HTTP/2 설정`,
+              link: `/server/nginx/http2`
+            },
+          ]
+          
         }
       ]
     },
@@ -127,24 +149,6 @@ function sidebar(): DefaultTheme.Sidebar {
         }
       ]
     },
-    // {
-    //   text: `Nuxt`,
-    //   items: [
-    //     { text: `애플리케이션 배포 가이드`, link: `/nuxt/deployment` },
-    //     {
-    //       text: `모듈`,
-    //       items: [
-    //         { text: `Nuxt I18n`, link: `/nuxt/modules/nuxt-i18n` }
-    //       ]
-    //     },
-    //   ]
-    // },
-    // {
-    //   text: `SpringBoot`,
-    //   items: [
-    //     { text: `OAuth2`, link: `/springboot/oauth2` }
-    //   ]
-    // },
     {
       text: `Oracle Cloud`,
       items: [
