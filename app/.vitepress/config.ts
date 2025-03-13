@@ -120,6 +120,10 @@ function sidebar(): DefaultTheme.Sidebar {
         {
           text: `설치`,
           link: `/mariadb/installation`
+        },
+        {
+          text: `설정`,
+          link: `/mariadb/configuration`
         }
       ]
     },

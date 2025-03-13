@@ -1,6 +1,6 @@
 ---
 prev: false
-next: false
+outline: deep
 ---
 
 # MariaDB 설치
@@ -29,7 +29,7 @@ next: false
 설명: MariaDB
 ```
 
-## MariaDB 설치
+## 설치
 
 1. `콘솔`로 접속합니다.
 
@@ -147,13 +147,13 @@ installation should now be secure.
 Thanks for using MariaDB!
 ```
 
-## MariaDB 접속
+## 접속
 
 ```bash
 mysql -u root -p
 ```
 
-## MariaDB 버전 확인
+## 버전 확인
 
 ```sql
 select version();
@@ -168,7 +168,7 @@ select version();
 1 row in set (0.000 sec)
 ```
 
-## MariaDB 상태 확인
+## 상태 확인
 
 ```bash
 service mysql status
@@ -194,13 +194,13 @@ service mysql status
              └─5423 /usr/sbin/mariadbd
 ```
 
-## MariaDB Database 생성
+## Database 생성
 
 ```sql
 create database xenialsoft;
 ```
 
-## MariaDB 외부 접속
+## 외부 접속 설정
 
 ```sql
 -- '%' => 외부 접속
@@ -212,7 +212,7 @@ create user '계정'@'%' identified by '비밀번호';
 grant all privileges on xenialsoft.* to '계정'@'%';
 ```
 
-## MariaDB PORT 설정
+## PORT 설정
 
 ```bash
 sudo vi /etc/mysql/my.cnf
@@ -252,7 +252,7 @@ socket = /run/mysqld/mysqld.sock
 !includedir /etc/mysql/mariadb.conf.d/
 ```
 
-## MariaDB IP 설정
+## IP 설정
 
 ```bash
 sudo vi /etc/mysql/mariadb.conf.d/50-server.cnf
