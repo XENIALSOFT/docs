@@ -10,6 +10,9 @@ outline: deep
 
 ```bash
 sudo apt update && sudo apt upgrade -y
+```
+
+```bash
 sudo apt install -y curl
 ```
 
@@ -17,6 +20,9 @@ sudo apt install -y curl
 
 ```bash
 sudo apt update && sudo apt upgrade -y
+```
+
+```bash
 sudo apt install -y nginx
 ```
 
@@ -24,10 +30,14 @@ sudo apt install -y nginx
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+```
+
+```bash
 sudo apt install -y nodejs
+```
 
+```bash
 node -v
-
 npm -v
 ```
 
@@ -35,7 +45,9 @@ npm -v
 
 ```bash
 sudo npm install -g pnpm
+```
 
+```bash
 pnpm -v
 ```
 
@@ -43,7 +55,9 @@ pnpm -v
 
 ```bash
 sudo npm install -g pm2
+```
 
+```bash
 pm2 -v
 ```
 
