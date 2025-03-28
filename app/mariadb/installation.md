@@ -79,7 +79,9 @@ sudo apt install mariadb-client
 
 ```bash
 sudo mysql_secure_installation
+```
 
+```bash
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
       SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
 
