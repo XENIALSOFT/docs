@@ -131,6 +131,10 @@ function sidebar(): DefaultTheme.Sidebar {
               text: `HTTP/2 설정`,
               link: `/server/nginx/http2`
             },
+            {
+              text: `파일 업로드 용량 제한 설정`,
+              link: `/server/nginx/file-upload-limit`
+            }
           ]
           
         }
