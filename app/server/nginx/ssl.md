@@ -103,3 +103,56 @@ server: nginx
 이와 같이 응답 헤더에 `HTTP/2` 또는 `Strict-Transport-Security(HSTS)`가 포함되어 있다면 정상적으로 SSL이 적용된 것입니다.
 
 이제 `Let's Encrypt SSL`을 사용하여 `HTTPS`를 적용하는 설정이 완료되었습니다.
+
+# www를 없애는 방법
+
+```nginx
+# ✅ HTTPS www.xenialsoft.com → https://xenialsoft.com 리디렉션
+server {
+    listen 443 ssl http2;
+    server_name www.xenialsoft.com;
+
+    ssl_certificate /etc/letsencrypt/live/xenialsoft.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/xenialsoft.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    return 301 https://xenialsoft.com$request_uri;
+}
+
+# ✅ HTTPS xenialsoft.com → Nuxt 앱으로 프록시
+server {
+    listen 443 ssl http2;
+    server_name xenialsoft.com;
+
+    ssl_certificate /etc/letsencrypt/live/xenialsoft.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/xenialsoft.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+# ✅ HTTP www.xenialsoft.com → https://xenialsoft.com
+server {
+    listen 80;
+    server_name www.xenialsoft.com;
+
+    return 301 https://xenialsoft.com$request_uri;
+}
+
+# ✅ HTTP xenialsoft.com → https://xenialsoft.com
+server {
+    listen 80;
+    server_name xenialsoft.com;
+
+    return 301 https://xenialsoft.com$request_uri;
+}
+```
