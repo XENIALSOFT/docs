@@ -54,11 +54,3 @@ A 레코드와 CNAME 레코드의 차이
 |도메인 → IP 연결|A 레코드|aforclinic.xenialsoft.com → 123.123.123.123|
 |도메인 → 도메인 연결|CNAME 레코드|clinic.xenialsoft.com → aforclinic.xenialsoft.com|
 :::
-
-## 포트 설정
-
-```bash
-sudo iptables -L --line
-sudo iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
-sudo iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
-```

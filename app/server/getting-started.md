@@ -78,3 +78,21 @@ sudo apt install -y java-21-amazon-corretto-jdk
 
 java -version
 ```
+
+### 포트 설정
+
+```bash
+sudo iptables -L --line
+sudo iptables -A INPUT -m state --state NEW -p tcp --dport 80 -j ACCEPT
+sudo iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
+```
+
+### 포트 저장
+
+```bash
+sudo iptables-save > /etc/iptables/rules.v4
+
+sudo apt update
+sudo apt install iptables-persistent
+```
+
