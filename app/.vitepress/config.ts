@@ -154,6 +154,15 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     {
+      text: `SpringBoot`,
+      items: [
+        {
+          text: `순번 설정`,
+          link: `/springboot/rownumber`
+        }
+      ]
+    },
+    {
       text: `Oracle Cloud`,
       items: [
         // { text: `언어 변경`, link: `/oracle-cloud/change-language` },
