@@ -1,4 +1,4 @@
-```cjs
+```js
 module.exports = {
   apps: [
     {
