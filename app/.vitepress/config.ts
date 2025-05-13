@@ -163,6 +163,15 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     {
+      text: `Nuxt`,
+      items: [
+        {
+          text: `@nuxt/image 사용 중 이미지가 표시되지 않는 문제 해결`,
+          link: `/nuxt/nuxt-image-public-sharp-issue`
+        }
+      ]
+    },
+    {
       text: `Oracle Cloud`,
       items: [
         // { text: `언어 변경`, link: `/oracle-cloud/change-language` },
