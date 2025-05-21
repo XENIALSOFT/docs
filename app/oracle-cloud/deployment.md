@@ -12,28 +12,28 @@
 
 1. SCP 명령어 사용
 
-```bash
+```sh
 scp -i ./ssh-key.key nuxt-app.tar.gz [계정]@[주소]:/var/www
 ```
 
 2. 권한 오류 해결
 위 명령어에서 `Bad permissions` 오류가 발생하면, 관리자 권한으로 PowerShell을 열어 아래 명령어로 권한을 재조정합니다.
 
-```bash
+```sh
 icacls .\ssh-key-2025-02-03.key /inheritance:r
 icacls .\ssh-key-2025-02-03.key /grant:r "사용자명:R"
 ```
 
 3. 서버에서 `/var/www` 디렉토리 생성 및 권한 설정
 
-```bash
+```sh
 sudo mkdir -p /var/www/nuxt-app
 sudo chown -R $USER:$USER /var/www/nuxt-app
 ```
 
 ### 압축 풀기
 
-```bash
+```sh
 cd /var/www/
 sudo mv nuxt-app.tar.gz nuxt-app/
 cd nuxt-app/
@@ -42,14 +42,14 @@ tar -xzvf nuxt-app.tar.gz
 
 ### 필수 패키지 설치
 
-```bash
+```sh
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y nginx curl
 ```
 
 ### Node.js, pnpm, pm2 설치
 
-```bash
+```sh
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
 
@@ -64,7 +64,7 @@ pm2 -v
 
 ### pm2로 Nuxt 앱 실행
 
-```bash
+```sh
 pm2 start .output/server/index.mjs --name "nuxt-app" --interpreter=node
 pm2 save
 pm2 startup
@@ -74,7 +74,7 @@ pm2 startup
 
 1. Nginx 설정 파일 작성
 
-```bash
+```sh
 sudo vi /etc/nginx/sites-available/nuxt-app
 ```
 
@@ -98,7 +98,7 @@ server {
 
 3. 심볼릭 링크로 활성화
 
-```bash
+```sh
 sudo ln -s /etc/nginx/sites-available/nuxt-app /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
@@ -106,7 +106,7 @@ sudo systemctl reload nginx
 
 ### 포트 설정
 
-```bash
+```sh
 sudo iptables -L --line
 # 'Chain INPUT'란에 REJECT된 부분을 삭제
 sudo iptables -D INPUT 번호
@@ -128,14 +128,14 @@ sudo iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
 
 1. Certbot과 Nginx 플러그인 설치
 
-```bash
+```sh
 sudo apt update
 sudo apt install -y certbot python3-certbot-nginx
 ```
 
 2. SSL 적용
 
-```bash
+```sh
 sudo certbot --nginx -d aforclinic.xenialsoft.com
 ```
 
@@ -143,7 +143,7 @@ sudo certbot --nginx -d aforclinic.xenialsoft.com
 
 ### 서버에 Amazon Corretto 21 설치
 
-```bash
+```sh
 # GPG 키 가져오기
 sudo apt update
 sudo apt install -y wget gnupg
@@ -159,7 +159,7 @@ sudo apt install -y java-21-amazon-corretto-jdk
 
 ### 로컬에서 스프링부트 앱 빌드하기
 
-```bash
+```sh
 ./gradlew clean build
 
 cd build/libs
@@ -169,7 +169,7 @@ scp -i ./ssh-key-2025-02-03.key api-0.0.1-SNAPSHOT.jar [계정]@[주소]:/var/ww
 
 ### pm2로 스프링부트 앱 실행하기
 
-```bash
+```sh
 pm2 start "java -jar api-0.0.1-SNAPSHOT.jar --spring.profiles.active=production" --name spring-app
 pm2 save
 pm2 startup
@@ -177,7 +177,7 @@ pm2 startup
 
 ### Nginx + Let's Encrypt SSL 적용 방법
 
-```bash
+```sh
 sudo certbot --nginx -d api.aforclinic.xenialsoft.com
 ```
 
@@ -197,7 +197,7 @@ sudo certbot --nginx -d api.aforclinic.xenialsoft.com
 
     1. scp -i ./ssh-key-2025-02-03.key nuxt-app.tar.gz [계정]@[주소]:/var/www
     2. 혹시 아래와 같은 오류가 발생했다면
-    ```bash
+    ```sh
     Bad permissions. Try removing permissions for user: BUILTIN\\Users (S-1-5-32-545) on file ssh-key-2025-02-03.key.
     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
@@ -212,7 +212,7 @@ sudo certbot --nginx -d api.aforclinic.xenialsoft.com
 
     pwsh를 관리자 권한으로 열어서
 
-    ```bash
+    ```sh
     icacls .\ssh-key-2025-02-03.key /inheritance:r
     icacls .\ssh-key-2025-02-03.key /grant:r "mglee:R"
     ```
@@ -221,7 +221,7 @@ sudo certbot --nginx -d api.aforclinic.xenialsoft.com
     3. 서버에서 /var/www를 만들어서 sudo chown -R $USER:$USER /var/www 도 해주자
 
 3. 업로드된 tar를 압축 풀어준다.
-```bash
+```sh
 cd /var/www/
 sudo mkdir -p nuxt-app
 sudo chown -R $USER:$USER nuxt-app
@@ -231,13 +231,13 @@ tar -xzvf nuxt-app.tar.gz
 ```
 
 4. 필수 패키지 설치
-```bash
+```sh
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y nginx curl git
 ```
 
 5. Node.js pnpm pm2 설치
-```bash
+```sh
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
 
@@ -251,14 +251,14 @@ pm2 -v
 ```
 
 6. pm2로 앱 실행
-```bash
+```sh
 pm2 start .output/server/index.mjs --name "nuxt-app" --interpreter=node
 pm2 save
 pm2 startup
 ```
 
 7. nginx 설정
-```bash
+```sh
 sudo vi /etc/nginx/sites-available/nuxt-app
 ```
 
@@ -278,14 +278,14 @@ server {
 }
 ```
 
-```bash
+```sh
 sudo ln -s /etc/nginx/sites-available/nuxt-app /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
 
 8. 포트 설정
-```bash
+```sh
 sudo iptables -L --line
 # 'Chain INPUT'란에 REJECT된 부분을 삭제
 sudo iptables -D INPUT 번호
@@ -306,7 +306,7 @@ sudo iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
 
     1. Certbot과 Nginx 플러그인 설치
     
-    ```bash
+    ```sh
     sudo apt update
     sudo apt install -y certbot python3-certbot-nginx
     ```
@@ -322,7 +322,7 @@ sudo iptables -A INPUT -m state --state NEW -p tcp --dport 443 -j ACCEPT
 
 1. Amazon Corretto 21 설치
 
-```bash
+```sh
 # GPG 키 가져오기
 sudo apt update
 sudo apt install -y wget gnupg
@@ -338,7 +338,7 @@ sudo apt install -y java-21-amazon-corretto-jdk
 
 2. 로컬에서 스프링부트 앱 빌드하기
 
-```bash
+```sh
 ./gradlew clean build
 
 cd build/libs
@@ -348,7 +348,7 @@ scp -i ./ssh-key-2025-02-03.key api-0.0.1-SNAPSHOT.jar [계정]@[주소]:/var/ww
 
 3. 서버에서 pm2로 스프링 부트 실행하기
 
-```bash
+```sh
 pm2 start "java -jar api-0.0.1-SNAPSHOT.jar --spring.profiles.active=production" --name spring-app
 pm2 save
 pm2 startup
@@ -356,6 +356,6 @@ pm2 startup
 
 4. ssl 적용
 
-```bash
+```sh
 sudo certbot --nginx -d api.aforclinic.xenialsoft.com
 ``` -->

@@ -5,49 +5,22 @@ outline: deep
 
 # MariaDB 설치
 
-## 방화벽 설정
-
-### AWS Lightsail
-
-1. `인스턴스` > `관리` > `네트워킹`을 선택합니다.
-
-2. `IPv4 방화벽`에서 규칙을 추가합니다.
-
-3. `애플리케이션`에서 `MySQL/Aurora`를 선택하여 생성한다.
-
-### Oracle
-
-1. `네트워킹` > `가상 클라우드 네트워크`에서 현재 생성된 `VCN`을 선택합니다.
-
-2. `가상 클라우드 네트워크 세부정보`에서 `보안 목록`으로 들어가서 현재 생성된 보안 목록을 선택합니다.
-
-3. `수신 규칙`을 추가합니다.
-
-```text
-소스 CIDR: 0.0.0.0/0
-대상 포트 범위: 3306
-설명: MariaDB
-```
-
 ## 설치
 
-1. `콘솔`로 접속합니다.
-
-2. `apt`를 최신화합니다.
-
-```bash
+- `APT` 최신화
+```sh
 sudo apt update
 ```
 
-3. `MariaDB Server` 모듈 설치
+-`MariaDB Server` 모듈 설치
 
-```bash
+```sh
 sudo apt install mariadb-server
 ```
 
-4. `MariaDB Client` 모듈 설치
+- `MariaDB Client` 모듈 설치
 
-```bash
+```sh
 sudo apt install mariadb-client
 ```
 
@@ -77,11 +50,11 @@ sudo apt install mariadb-client
 
 `MariaDB`에는 기본적으로 `test`라는 테스트용 데이터베이스가 설치됩니다. 이 데이터베이스는 보안상 불필요한 것이므로 `mysql_secure_installation`은 이를 제거할지 묻습니다. 이 테스트 데이터베이스를 제거하면 잠재적인 보안 위험을 줄일 수 있습니다.
 
-```bash
+```sh
 sudo mysql_secure_installation
 ```
 
-```bash
+```sh
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
       SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
 
@@ -151,7 +124,7 @@ Thanks for using MariaDB!
 
 ## 접속
 
-```bash
+```sh
 mysql -u root -p
 ```
 
@@ -172,11 +145,11 @@ select version();
 
 ## 상태 확인
 
-```bash
+```sh
 service mysql status
 ```
 
-```bash
+```sh
 ● mariadb.service - MariaDB 10.11.8 database server
      Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled; preset: enabled)
      Active: active (running) since Mon 2025-02-03 15:35:14 UTC; 19min ago
@@ -216,13 +189,13 @@ grant all privileges on xenialsoft.* to '계정'@'%';
 
 ## PORT 설정
 
-```bash
+```sh
 sudo vi /etc/mysql/my.cnf
 ```
 
 `PORT` 부분의 주석을 해제한다.
 
-```bash
+```sh
 # The MariaDB configuration file
 #
 # The MariaDB/MySQL tools read configuration files in the following order:
@@ -256,13 +229,13 @@ socket = /run/mysqld/mysqld.sock
 
 ## IP 설정
 
-```bash
+```sh
 sudo vi /etc/mysql/mariadb.conf.d/50-server.cnf
 ```
 
 `IP` 부분의 값을 `0.0.0.0`으로 수정한다.
 
-```bash
+```sh
 #
 # These groups are read by MariaDB server.
 # Use it for options that only the server (but not clients) should see
@@ -298,7 +271,7 @@ bind-address            = 0.0.0.0
 
 지금까지 설정을 적용하기 위해 재시작을 합니다.
 
-```bash
+```sh
 sudo systemctl restart mariadb
 ```
 
@@ -308,13 +281,13 @@ sudo systemctl restart mariadb
 
 여기서 `ens3`는 네트워크 인터페이스입니다.
 
-```bash
+```sh
 sudo iptables -A INPUT -i ens3 -p tcp --dport 3306 -m state --state NEW,ESTABLISHED -j ACCEPT
 ```
 
 `iptables`의 목록 중 `mysql`에 대한 인바운드 규칙이 추가된 것을 확인할 수 있습니다.
 
-```bash
+```sh
 sudo iptables -L INPUT --line-numbers
 ```
 
