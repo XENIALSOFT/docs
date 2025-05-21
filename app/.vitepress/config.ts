@@ -137,6 +137,10 @@ function sidebar(): DefaultTheme.Sidebar {
       text: `배포 및 운영`,
       items: [
         {
+          text: `시작하기`,
+          link: `/devops/getting-started`
+        },
+        {
           text: `MariaDB`,
           items: [
             {
@@ -172,6 +176,12 @@ function sidebar(): DefaultTheme.Sidebar {
               text: `파일 업로드 용량 제한 설정`,
               link: `/devops/nginx/file-upload-limit`
             }
+          ]
+        },
+        {
+          text: `pm2`,
+          items: [
+            
           ]
         }
       ]
