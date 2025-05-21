@@ -219,4 +219,10 @@ pm2 logs api --lines 1000
 
 이를 방지하기 위해 `logrotate` 모듈을 사용합니다.
 
-[PM2 Logrotate](/app/devops/pm2/pm2-logrotate.md)
+[logrotate](./logrotate.md)
+
+## ecosystem.config.js
+
+`ecosystem.config.js`는 **PM2 프로세스 실행에 필요한 모든 설정을 코드로 구성할 수 있는 설정 파일**입니다.
+
+[ecosystem.config.js](./ecosystem-config.md)
