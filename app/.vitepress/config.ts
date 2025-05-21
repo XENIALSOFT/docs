@@ -181,7 +181,14 @@ function sidebar(): DefaultTheme.Sidebar {
         {
           text: `pm2`,
           items: [
-            
+            {
+              text: `시작하기`,
+              link: `/devops/pm2/getting-started`
+            },
+            {
+              text: `로그 관리`,
+              link: `/devops/pm2/pm2-logrotate`
+            }
           ]
         }
       ]
