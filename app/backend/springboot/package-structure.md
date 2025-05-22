@@ -30,6 +30,8 @@
   - util/
     - SecurityUtils.java
 - config/
+  - scheduler/
+    - SchedulerConfig.java
   - settings/
     - MessageProperties.java
   - aspect/
@@ -58,6 +60,8 @@
     - mapper/
     - service/
     - controller/
+    - scheduler/
+      - RefreshTokenCleanupScheduler.java
   - member
     - domain/
     - dto/
@@ -72,6 +76,12 @@
 - custom/
   - member
     - controller/
+
+<!--
+@ConditionalOnProperty(name = "scheduler.refresh-token.enabled", havingValue = "true", matchIfMissing = true)
+
+로
+-->
 
 <!--
 ✅ 결론
