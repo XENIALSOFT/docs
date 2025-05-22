@@ -103,6 +103,13 @@ function sidebar(): DefaultTheme.Sidebar {
               link: `/backend/springboot/intro`
             },
             {
+              text: `패키지 구조`,
+              link: `/backend/springboot/package-structure`,
+              items: [
+
+              ]
+            },
+            {
               text: `순번 설정`,
               link: `/backend/springboot/rownumber`
             }
