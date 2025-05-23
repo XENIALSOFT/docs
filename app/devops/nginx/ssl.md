@@ -50,10 +50,18 @@ sudo crontab -e
 그리고 다음 내용을 추가합니다.
 
 ```bash
-0 3 * * * /usr/bin/certbot renew --quiet
+0 3 * * * sudo certbot renew --quiet
 ```
 
 이 설정은 매일 새벽 3시에 SSL 인증서를 자동 갱신합니다.
+
+```bash
+0 3 * * * sudo certbot renew --quiet >> /var/log/certbot/result-$(date +\%Y\%m\%d).log 2>&1
+```
+
+이 설정은 매일 새벽 3시에 SSL 인증서를 자동 갱신하고 `certbot renew`의 결과를 로그로 남깁니다.
+
+`2>&1`은 표준 에러도 함께 기록하여 실패한 이유 파악하기에 중요합니다.
 
 ## SSL 인증서 상태 확인
 
