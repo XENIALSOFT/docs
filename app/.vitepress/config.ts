@@ -93,6 +93,29 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     {
+      text: `프론트엔드`,
+      items: [
+        {
+          text: `Nuxt`,
+          items: [
+            {
+              text: `@nuxt/image 문제 해결`,
+              link: `/frontend/nuxt/nuxt-image-sharp-issue`
+            }
+          ]
+        },
+        {
+          text: `Tailwind CSS`,
+        },
+        {
+          text: `Daisy UI`,
+        },
+        {
+          text: `Headless UI`,
+        }
+      ]
+    },
+    {
       text: `백엔드`,
       items: [
         {
@@ -114,29 +137,6 @@ function sidebar(): DefaultTheme.Sidebar {
               link: `/backend/springboot/rownumber`
             }
           ]
-        }
-      ]
-    },
-    {
-      text: `프론트엔드`,
-      items: [
-        {
-          text: `Nuxt`,
-          items: [
-            {
-              text: `@nuxt/image 문제 해결`,
-              link: `/frontend/nuxt/nuxt-image-sharp-issue`
-            }
-          ]
-        },
-        {
-          text: `Tailwind CSS`,
-        },
-        {
-          text: `Daisy UI`,
-        },
-        {
-          text: `Headless UI`,
         }
       ]
     },
@@ -223,15 +223,15 @@ function sidebar(): DefaultTheme.Sidebar {
       ]
     },
     //
-    {
-      text: `클라이언트`,
-      items: [
-        {
-          text: `시작하기`,
-          link: `/client/getting-started`
-        },
-      ]
-    },
+    // {
+    //   text: `클라이언트`,
+    //   items: [
+    //     {
+    //       text: `시작하기`,
+    //       link: `/client/getting-started`
+    //     },
+    //   ]
+    // },
     // {
     //   text: `서버`,
     //   items: [
