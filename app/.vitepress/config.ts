@@ -112,6 +112,9 @@ function sidebar(): DefaultTheme.Sidebar {
         },
         {
           text: `Headless UI`,
+        },
+        {
+          text: `SEO`
         }
       ]
     },
@@ -129,7 +132,10 @@ function sidebar(): DefaultTheme.Sidebar {
               text: `패키지 구조`,
               link: `/backend/springboot/package-structure`,
               items: [
-
+                {
+                  text: `config`,
+                  link: `/backend/springboot/package-structure/config`
+                }
               ]
             },
             {
