@@ -19,6 +19,7 @@
 - common/
   ├── constants/
   ├── dto/
+  │   ├── ApiPageRequest.java
   │   ├── ApiPageResponse.java
   │   └── ApiResponse.java
   ├── exception/
@@ -36,24 +37,29 @@
 - config/
   ├── aspect/
   │   ├── AspectConfig.java
+  │   ├── AuditAspect.java
   │   └── LoggingAspect.java
   ├── mybatis/
   │   ├── MyBatisConfig.java
-  │   └── typehandle/
-  │       └── AESTypeHandler.java
+  │   └── typehandler/
+  │       └── AESStringTypeHandler.java
   ├── scheduler/
   │   └── SchedulerConfig.java
   ├── security/
   │   ├── filter/
   │   │   ├── CustomUsernamePasswordAuthenticationFilter.java
   │   │   └── JwtAuthenticationFilter.java
+  │   ├── handler/
+  │   │   ├── JwtAccessDeniedHandler.java
+  │   │   └── JwtAuthenticationEntryPoint.java
   │   ├── JwtConfig.java
   │   └── SecurityConfig.java
   └── web/
       ├── filter/
       ├── interceptor/
       ├── CorsConfig.java
-      └── WebConfig.java (with DataWebConfig.java)
+      ├── MessageConfig.java
+      └── WebConfig.java
 
 - core/
   ├── auth/
@@ -105,26 +111,6 @@
       ├── mapper/
       └── service/
 ```
-
-<!--
-https://chatgpt.com/share/68302ca6-a3f0-8004-aae1-5946539441a5
--->
-
-<!--
-변환 로직은 엔티티가 담당하고 dto에서는 변환 책임이나 로직은 지양한다.
-
-엔티티가 담당할 변환 로직이 많아진다면 별도의 컨버터를 두어 변환을 담당하도록 한다.
-
-네이밍은 ~Converter나 ~Assembler
-
-public interface Converter<S, T> {
-    T convert(S source);
-}
-
-public interface BiConverter<S, T> extends Converter<S, T> {
-    S reverse(T target);
-}
--->
 
 <!--
 🧱 구조 정의
@@ -469,82 +455,6 @@ protected void successfulAuthentication(HttpServletRequest request, HttpServletR
 📦 현재 구조와 보안 관점에서는 단순하고 명확한 코드가 좋다.
 -->
 
-<!--
-package config.security.filter;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.io.IOException;
-
-public class CustomUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
-    public CustomUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super.setAuthenticationManager(authenticationManager);
-        super.setRequiresAuthenticationRequestMatcher(
-                new AntPathRequestMatcher("/auth/issue", "POST")
-        );
-    }
-
-    /**
-     * 로그인 요청에서 사용자 이름과 비밀번호를 추출하여 인증을 시도합니다.
-     */
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
-
-        String username = obtainUsername(request);
-        String password = obtainPassword(request);
-
-        if (username == null) username = "";
-        if (password == null) password = "";
-
-        username = username.trim();
-
-        UsernamePasswordAuthenticationToken authRequest =
-                new UsernamePasswordAuthenticationToken(username, password);
-
-        setDetails(request, authRequest);
-        return getAuthenticationManager().authenticate(authRequest);
-    }
-
-    /**
-     * 인증 성공 시 인증 정보를 SecurityContext에 저장하고 체인을 계속 진행합니다.
-     */
-    @Override
-    protected void successfulAuthentication(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain,
-            Authentication authResult
-    ) throws IOException, ServletException {
-
-        SecurityContextHolder.getContext().setAuthentication(authResult);
-        chain.doFilter(request, response);
-    }
-
-    /**
-     * 인증 실패 시 처리 로직. 기본 로직을 사용하되, 커스터마이징 가능.
-     */
-    @Override
-    protected void unsuccessfulAuthentication(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            AuthenticationException failed
-    ) throws IOException, ServletException {
-        super.unsuccessfulAuthentication(request, response, failed);
-    }
-}
--->
 
 <!--
 @ConditionalOnProperty(name = "scheduler.refresh-token.enabled", havingValue = "true", matchIfMissing = true)
@@ -559,84 +469,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 src/main/resources/mapper/[도메인]/[매퍼이름].xml
 
 도메인 기준으로 잘 분리되어 있어서 현재 잡아놓은 core.member.mapper 등의 구조와 완벽히 매칭되며, 실무에서도 가장 널리 사용되는 구조입니다.
--->
-
-<!--
-📁 위치 추천
-- common/
-  - util/
-    - SecurityUtils.java
-
-
-
-package com.example.common.util;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
-public class SecurityUtils {
-
-    private SecurityUtils() {
-        // 인스턴스화 방지
-    }
-
-    /**
-     * 현재 인증된 사용자 이름(ID 또는 username) 반환
-     */
-    public static String getCurrentUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
-        }
-
-        Object principal = authentication.getPrincipal();
-
-        if (principal instanceof UserDetails userDetails) {
-            return userDetails.getUsername();  // or getId() if overridden
-        } else if (principal instanceof String) {
-            return (String) principal;
-        }
-
-        return null;
-    }
-
-    /**
-     * 인증 객체 전체 반환 (필요 시 커스텀 UserDetails 사용 가능)
-     */
-    public static Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
-
-    /**
-     * 현재 로그인 여부 확인
-     */
-    public static boolean isAuthenticated() {
-        Authentication authentication = getAuthentication();
-        return authentication != null && authentication.isAuthenticated()
-                && !(authentication.getPrincipal() instanceof String && authentication.getPrincipal().equals("anonymousUser"));
-    }
-
-    /**
-     * 사용자 ID(Long) 형태로 꺼내고 싶다면 커스텀 UserDetails에 ID 포함시켜야 함
-     */
-    public static Long getCurrentUserId() {
-        Authentication authentication = getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
-        }
-
-        Object principal = authentication.getPrincipal();
-
-        if (principal instanceof CustomUserDetails userDetails) {
-            return userDetails.getId(); // 이 부분은 사용자 정의 UserDetails 구현체 기준
-        }
-
-        return null;
-    }
-}
 -->
 
 <!--
@@ -705,37 +537,45 @@ MemberService는 도메인 로직을 담당합니다.
 -->
 
 <!--
-com.example.projectname
-├── config                  # 전역 설정 관련
-│   ├── settings           # @ConfigurationProperties 등 환경 설정 바인딩
-│   ├── aspect             # AOP 관련 설정 및 클래스
-│   ├── persistence        # DB / MyBatis / JPA 관련 설정
-│   ├── security           # Spring Security 관련 설정
-│   └── web                # WebMvc, 메시지 변환, CORS 등 설정
+com.xenialsoft.api
+├── common                     # 공통 유틸리티, DTO, 예외, 보안 등
+│   ├── annotation             # @Auditable 등 AOP 대상 어노테이션
+│   ├── dto                    # ApiResponse, ApiPageRequest, ApiPageResponse 등
+│   ├── exception              # GlobalExceptionHandler, 커스텀 예외
+│   ├── support                # RowNumberSupport, Auditable 인터페이스 등
+│   └── util                   # AESUtils, LoggingUtils, NanoIdGenerator 등
 │
-├── core                   # 비즈니스 핵심 도메인 계층 (관리 대상이 많을 경우 도메인 기준 세분화)
-│   ├── auth               # 인증/인가 관련 도메인, 서비스, 인터페이스
-│   │   ├── domain         # 핵심 도메인 모델 (User, Token 등)
-│   │   ├── service        # 서비스 계층
-│   │   ├── infra          # DB, Redis 등 외부 자원 접근 구현
-│   │   └── api            # (선택) core-level 자체 API 제공 시
-│   ├── member             # 회원 관련 도메인
-│   │   ├── domain
+├── config                     # 설정
+│   ├── aspect                 # AuditAspect, LoggingAspect 등
+│   ├── security               # SecurityConfig, JwtProvider, 필터 등
+│   ├── scheduler              # RefreshTokenCleanupScheduler 등
+│   ├── web                    # WebMvc 설정, Interceptor, CorsConfig 등
+│   ├── mybatis                # MyBatis 설정, TypeHandler, Mapper XML 등
+│   └── properties             # AesProperties, MessageProperties 등
+│
+├── core                       # 핵심 도메인 계층
+│   ├── auth                   # 로그인/인증/토큰 관련
+│   │   ├── controller
 │   │   ├── service
-│   │   ├── infra
-│   │   └── api
-│   └── common             # 공통 유틸, 예외, 공통 응답 등
+│   │   ├── mapper
+│   │   ├── domain             # 엔티티 (RefreshToken 등)
+│   │   ├── dto                # TokenRequest, TokenResponse 등
+│   │   └── support            # AuthConverter, AuthAssembler
+│   │
+│   ├── member                 # 사용자 도메인
+│   │   ├── controller
+│   │   ├── service
+│   │   ├── mapper
+│   │   ├── domain
+│   │   └── dto
+│   │
+│   └── [추가 도메인]          # 예: 게시판, 예약 등
 │
-├── admin                  # 어드민 전용 API / 기능
-│   ├── controller         # 어드민용 API
-│   ├── service            # 어드민 전용 서비스 (core에 의존)
-│   └── dto                # 어드민용 DTO
+├── admin                      # 관리자 전용 기능
+│   └── [도메인 단위로 구성]   # admin.member, admin.appointment 등
 │
-├── custom                 # 커스터머(일반 사용자) API / 기능
-│   ├── controller         # 사용자용 API
-│   ├── service            # 사용자 전용 서비스
-│   └── dto                # 사용자용 DTO
+├── custom                     # 사이트/지점별 커스터마이징 기능
+│   └── [도메인 단위로 구성]   # custom.notice, custom.member 등
 │
-└── Application.java       # SpringBootApplication Entry Point
-
+└── Application.java           # 메인 실행 클래스
 -->
