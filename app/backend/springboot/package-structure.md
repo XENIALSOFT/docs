@@ -17,21 +17,27 @@
 
 ```markdown
 - common/
-  ├── constants/
+  ├── annotation/
+  ├── constant/
+  │   ├── ApplicationCoreVersion.java
   ├── dto/
   │   ├── ApiPageRequest.java
   │   ├── ApiPageResponse.java
   │   └── ApiResponse.java
   ├── exception/
-  │   ├── AuthException.java
+  │   ├── CustomRuntimeException.java
   │   └── GlobalExceptionHandler.java
   ├── support/
   │   ├── convert/
   │   │   ├── Converter.java
   │   │   └── BiConverter.java
-  │   ├── Auditable.java
+  │   ├── CodeBasedEnum.java
   │   └── RowNumberSupport.java
   └── util/
+      ├── AESUtils.java
+      ├── HttpRequestUtils.java
+      ├── NanoIdGenerator.java
+      ├── RowNumberUtils.java
       └── SecurityUtils.java
 
 - config/
@@ -43,6 +49,12 @@
   │   ├── MyBatisConfig.java
   │   └── typehandler/
   │       └── AESStringTypeHandler.java
+  ├── properties/
+  │   ├── ApplicationProperties.java
+  │   ├── CorsProperties.java
+  │   ├── JwtProperties.java
+  │   ├── OAuth2Properties.java
+  │   └── StorageProperties.java
   ├── scheduler/
   │   └── SchedulerConfig.java
   ├── security/
@@ -52,36 +64,38 @@
   │   ├── handler/
   │   │   ├── JwtAccessDeniedHandler.java
   │   │   └── JwtAuthenticationEntryPoint.java
-  │   ├── JwtConfig.java
+  │   ├── JwtProvider.java
+  │   ├── MethodSecurityConfig.java
   │   └── SecurityConfig.java
   └── web/
       ├── filter/
       ├── interceptor/
-      ├── CorsConfig.java
       ├── MessageConfig.java
       └── WebConfig.java
 
 - core/
   ├── auth/
-  │   ├── constants/
+  │   ├── constant/
+  │   │   └── SystemRole.java
   │   ├── controller/
   │   │   └── AuthController.java
-  │   ├── support/
-  │   │   ├── AuthConverter.java
-  │   │   └── AuthAssembler.java
   │   ├── domain/
+  │   │   ├── CustomUserDetails.java
   │   │   └── RefreshToken.java
   │   ├── dto/
   │   │   ├── request/
+  │   │   │   └── RefreshTokenRequest.java
   │   │   └── response/
-  │   │       └── TokenResponse.java
+  │   │   │   ├── AccessTokenResponse.java
+  │   │   │   └── TokenResponse.java
   │   ├── mapper/
   │   │   └── RefreshTokenMapper.java
   │   ├── scheduler/
   │   │   └── RefreshTokenCleanupScheduler.java
   │   └── service/
   │       ├── AuthService.java
-  │       └── CustomUserDetailsService.java
+  │       ├── CustomUserDetailsService.java
+  │       └── RefreshTokenService.java
   └── member/
       ├── controller/
       ├── domain/
@@ -91,26 +105,31 @@
       ├── mapper/
       └── service/
 
-- admin/
-  └── [도메인]/
-      ├── controller/
-      ├── domain/
-      ├── dto/
-      │   ├── request/
-      │   └── response/
-      ├── mapper/
-      └── service/
-
-- custom/
-  └── [도메인]/
-      ├── controller/
-      ├── domain/
-      ├── dto/
-      │   ├── request/
-      │   └── response/
-      ├── mapper/
-      └── service/
+- modules/
+  ├── admin/
+  │   └── [도메인]
+  │       ├── controller/
+  │       ├── domain/
+  │       ├── dto/
+  │       │   ├── request/
+  │       │   └── response/
+  │       ├── mapper/
+  │       └── service/
+  └── custom/
+      └── [도메인]
+          ├── controller/
+          ├── domain/
+          ├── dto/
+          │   ├── request/
+          │   └── response/
+          ├── mapper/
+          └── service/
 ```
+
+<!--
+도메인 모델에서는 ENUM을 피하는 것이 좋다.
+이유는 DB와 ENUM의 강결합을 피하기 위해 String을 사용한다.
+-->
 
 <!--
 🧱 구조 정의
@@ -549,7 +568,7 @@ com.xenialsoft.api
 │   ├── aspect                 # AuditAspect, LoggingAspect 등
 │   ├── security               # SecurityConfig, JwtProvider, 필터 등
 │   ├── scheduler              # RefreshTokenCleanupScheduler 등
-│   ├── web                    # WebMvc 설정, Interceptor, CorsConfig 등
+│   ├── web                    # WebMvc 설정, Interceptor, 등
 │   ├── mybatis                # MyBatis 설정, TypeHandler, Mapper XML 등
 │   └── properties             # AesProperties, MessageProperties 등
 │
