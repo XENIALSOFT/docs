@@ -132,6 +132,8 @@ Nitro               Api
 /api/auth/sign-out  /auth/sign-out          [refreshtoken]  => []
 /api/auth/refresh   /auth/refresh           [refreshtoken]  => [accesstoken, refreshtoken]
 /api/auth/token     /auth/refresh-token     [refreshtoken]  => [accesstoken]
+
+/api/users/me       /users/me               []
 -->
 
 <!--
