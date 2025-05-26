@@ -86,8 +86,8 @@
   │   │   ├── request/
   │   │   │   └── RefreshTokenRequest.java
   │   │   └── response/
-  │   │   │   ├── AccessTokenResponse.java
-  │   │   │   └── TokenResponse.java
+  │   │       ├── AccessTokenResponse.java
+  │   │       └── TokenResponse.java
   │   ├── mapper/
   │   │   └── RefreshTokenMapper.java
   │   ├── scheduler/
@@ -125,6 +125,20 @@
           ├── mapper/
           └── service/
 ```
+
+<!--
+Nitro               Api
+/api/auth/sign-in   /auth/sign-in           [credentials]   => [accesstoken, refreshtoken]
+/api/auth/sign-out  /auth/sign-out          [refreshtoken]  => []
+/api/auth/refresh   /auth/refresh           [refreshtoken]  => [accesstoken, refreshtoken]
+/api/auth/token     /auth/refresh-token     [refreshtoken]  => [accesstoken]
+-->
+
+<!--
+FileUtils.java
+
+
+-->
 
 <!--
 도메인 모델에서는 ENUM을 피하는 것이 좋다.
@@ -337,7 +351,7 @@ XML	실제 쿼리 정의	Entity for Insert/Update, DTO for Select
 
 없다면 "로그아웃 상태"
 
-리프레시 토큰으로 액세스 토큰 요청 (/auth/reissue-access)
+리프레시 토큰으로 액세스 토큰 요청 (/auth/refresh-access)
 
 성공 시 새 액세스 토큰 발급 (리프레시 토큰은 그대로 유지)
 
@@ -357,7 +371,7 @@ XML	실제 쿼리 정의	Entity for Insert/Update, DTO for Select
 🔁 갱신 로직 분리	액세스 토큰 재발급과 사용자 정보 조회를 분리 관리
 
 ✨ 추천 설계
-1. /auth/reissue-access – 액세스 토큰 재발급
+1. /auth/refresh-access – 액세스 토큰 재발급
 입력: refreshToken (쿠키 또는 Authorization 헤더)
 
 출력: accessToken (Authorization 헤더 또는 응답 바디)
@@ -388,7 +402,7 @@ accessToken이 유효해도, 그 사용자 정보가 DB에서 삭제되었거나
 
 🎯 요약
 목적	경로	설명
-access 재발급	/auth/reissue-access	refresh 토큰으로 access 발급
+access 재발급	/auth/refresh-access	refresh 토큰으로 access 발급
 세션 정보 조회	/auth/me	access 토큰 기반 사용자 정보 반환
 완전 재발급	/auth/refresh	refresh & access 로테이션
 
@@ -398,96 +412,9 @@ access 재발급	/auth/reissue-access	refresh 토큰으로 access 발급
 -->
 
 <!--
-@Slf4j
-@Service
-@RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
-
-    private final UserService service;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return service.getUserByUsername(username)
-            .map(user -> CustomUserDetails.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .authorities(user.getRole())
-                .build())
-            .orElseThrow(() -> {
-                log.warn("사용자를 찾을 수 없습니다. => username: {}", username);
-                return new UsernameNotFoundException("User Not Found");
-            });
-    }
-}
--->
-
-<!--
-AuthController에서는
-
-sign-in
-sign-out
-sign-up
-reissue-access
-refresh
-
-화면에서는
-
-Sign in: /api/auth/login (POST) => sign-in
-Sign out /api/auth/logout (POST) => sign-out
-Sign up: /api/auth/register (POST) => sign-up
-Get Session: /api/auth/session (GET) => 
-
-/api/auth/token (GET) => reissue-access
-/api/auth/refresh (GET) => refresh
--->
-
-<!--
-결론: "/auth/sign-in"이 더 명확하고 RESTful한 네이밍입니다.
-
-로그인: /auth/sign-in
-
-로그아웃: /auth/sign-out
-
-회원가입: /auth/sign-up
-
-토큰 갱신: /auth/refresh
-
-토큰 발급(내부 API 용): /auth/token
--->
-
-<!--
-CustomUsernamePasswordAuthenticationFilter.java
-
-@Override
-protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-        Authentication authentication) throws IOException, ServletException {
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-    chain.doFilter(request, response);
-}
-
-💡 요약
-🔒 기본 인증 객체를 그대로 사용하는 것이 바람직하다.
-
-🔧 새로 생성은 특수 상황에서만 고려한다.
-
-📦 현재 구조와 보안 관점에서는 단순하고 명확한 코드가 좋다.
--->
-
-
-<!--
 @ConditionalOnProperty(name = "scheduler.refresh-token.enabled", havingValue = "true", matchIfMissing = true)
 
 로
--->
-
-<!--
-✅ 결론
-추천 경로:
-
-src/main/resources/mapper/[도메인]/[매퍼이름].xml
-
-도메인 기준으로 잘 분리되어 있어서 현재 잡아놓은 core.member.mapper 등의 구조와 완벽히 매칭되며, 실무에서도 가장 널리 사용되는 구조입니다.
 -->
 
 <!--
@@ -545,14 +472,6 @@ MemberService는 도메인 로직을 담당합니다.
 | `RequestIdFilter` | 추적용 UUID 생성 및 MDC 등록        |
 | `XSSFilter`       | XSS 방지용 HTML sanitizer 필터 등 |
 
--->
-
-<!--
-✅ 네이밍 팁
-상수 클래스: ~Constants, ~Codes, ~Defaults 등의 네이밍이 좋습니다
-(예: MemberConstants, AuthErrorCodes, UserDefaults)
-
-유틸 클래스: ~Utils, ~Helper, ~Generator, ~Converter
 -->
 
 <!--
