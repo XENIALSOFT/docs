@@ -45,6 +45,8 @@
   │   ├── AspectConfig.java
   │   ├── AuditAspect.java
   │   └── LoggingAspect.java
+  ├── cache/
+  │   └── CacheConfig.java
   ├── mybatis/
   │   ├── MyBatisConfig.java
   │   └── typehandler/
