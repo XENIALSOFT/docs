@@ -129,6 +129,31 @@
 ```
 
 <!--
+ {
+  id=4278930755,
+  connected_at=2025-05-27T05:12:27Z, 
+  properties={
+    nickname=멍, 
+    profile_image=http://k.kakaocdn.net/dn/tJRky/btrZjZ8qwam/iGYjRKPvPLCKlF4ULVtbu1/img_640x640.jpg, 
+    thumbnail_image=http://k.kakaocdn.net/dn/tJRky/btrZjZ8qwam/iGYjRKPvPLCKlF4ULVtbu1/img_110x110.jpg
+  }, 
+  kakao_account={
+    profile_needs_agreement=false, 
+    profile={
+      nickname=멍, 
+      thumbnail_image_url=http://k.kakaocdn.net/dn/tJRky/btrZjZ8qwam/iGYjRKPvPLCKlF4ULVtbu1/img_110x110.jpg, 
+      profile_image_url=http://k.kakaocdn.net/dn/tJRky/btrZjZ8qwam/iGYjRKPvPLCKlF4ULVtbu1/img_640x640.jpg, 
+      is_default_image=false, 
+      is_default_nickname=false
+    }, 
+    has_phone_number=true, 
+    phone_number_needs_agreement=false, 
+    phone_number=+82 10-4459-2214
+  }
+}
+-->
+
+<!--
 implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
 -->
 
