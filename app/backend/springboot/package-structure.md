@@ -127,6 +127,27 @@
 ```
 
 <!--
+@Configuration
+public class CacheConfig {
+
+    @Bean
+    public Cache<String, String> caffeine() {
+        return Caffeine.newBuilder()
+                .expireAfterWrite(Duration.ofMinutes(3)) // TTL
+                .maximumSize(1000)                      // 용량 제한
+                .build();
+    }
+}
+
+/auth/exchange-code
+
+CustomOAuth2SuccessHandler에서는
+
+리디렉션주소?code=임시코드 의 형태로 반환
+(현재는 리디렉션주소?refreshTokenId=리프레시토큰식별자)의 형태임
+-->
+
+<!--
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
