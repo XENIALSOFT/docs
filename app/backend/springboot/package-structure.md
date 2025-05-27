@@ -127,6 +127,23 @@
 ```
 
 <!--
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(
+                "/oauth2/authorization/**",
+                "/login/oauth2/code/**"
+            ).permitAll()
+            .anyRequest().authenticated()
+        )
+        .oauth2Login(); // OAuth2 login 설정
+
+    return http.build();
+}
+-->
+
+<!--
 Nitro               Api
 /api/auth/sign-in   /auth/sign-in           [credentials]   => [accesstoken, refreshtoken]
 /api/auth/sign-out  /auth/sign-out          [refreshtoken]  => []
