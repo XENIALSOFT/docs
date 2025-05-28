@@ -130,7 +130,7 @@
 
 <!--
  {
-  id=4278930755,
+  id=4173230255,
   connected_at=2025-05-27T05:12:27Z, 
   properties={
     nickname=멍, 
@@ -148,7 +148,7 @@
     }, 
     has_phone_number=true, 
     phone_number_needs_agreement=false, 
-    phone_number=+82 10-4459-2214
+    phone_number=+82 10-1234-1234
   }
 }
 -->
