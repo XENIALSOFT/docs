@@ -47,36 +47,33 @@ export default defineNuxtRouteMiddleware((to) => {
 // middleware/permanent-redirect.global.ts
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
-type RedirectMap = Record<string, string>
-
-const redirects: RedirectMap = {
-  '/alpha': '/beta',
-  '/beta': '/gamma',
-  '/old-about': '/new-about',
-};
-
-/**
- * 재귀적으로 최종 리디렉션 경로를 찾는다.
- * 순환 참조 방지용 visited 셋을 사용.
- */
-function resolve(
-  path: string,
-  redirects: RedirectMap,
-  visited = new Set<string>()
-): string | null {
-  if (visited.has(path)) {
-    return null
-  }
-  visited.add(path)
-
-  const redirect = redirects[path]
-  if (!redirect) return path
-
-  return resolve(redirect, redirects, visited)
-}
-
 export default defineNuxtRouteMiddleware((to) => {
-  const destination = resolve(to.path, redirects)
+
+  const redirects: Record<string, string> = {
+    '/alpha': '/beta',
+    '/beta': '/gamma',
+    '/old-about': '/new-about',
+  };
+
+  function resolve(
+    path: string,
+    visited = new Set<string>()
+  ): string | null {
+    if (visited.has(path)) {
+      return null
+    }
+    
+    visited.add(path)
+
+    const redirect = redirects[path]
+    if (!redirect) {
+      return path
+    }
+
+    return resolve(redirect, visited) 
+  }
+
+  const destination = resolve(to.path) 
   if (destination && destination !== to.path) {
     return navigateTo(destination, {
       redirectCode: 301,
