@@ -9,6 +9,33 @@
 ```
 
 <!--
+<script setup lang="ts">
+import { ref } from 'vue'
+
+/** 헬퍼 함수: 실패 시 기본값으로 대체 */
+function unwrap<T>(result: PromiseSettledResult<T>, fallback: T): T {
+  return result.status === 'fulfilled' ? result.value : fallback
+}
+
+// 반응형 상태 선언
+const categories = ref([])
+const products = ref([])
+const recommended = ref([])
+
+const results = await Promise.allSettled([
+  $api('/api/categories'),
+  $api('/api/products'),
+  $api('/api/products/recommended')
+])
+
+// unwrap으로 안전하게 추출
+categories.value = unwrap(results[0], categories.value)
+products.value = unwrap(results[1], products.value)
+recommended.value = unwrap(results[2], recommended.value)
+</script>
+-->
+
+<!--
 oauth.get.ts에서
 
 const referer = event.node.req.headers.referer || '/';

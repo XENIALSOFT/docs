@@ -101,6 +101,10 @@ function sidebar(): DefaultTheme.Sidebar {
             {
               text: `@nuxt/image 문제 해결`,
               link: `/frontend/nuxt/nuxt-image-sharp-issue`
+            },
+            {
+              text: `미들웨어를 활용한 주소 이동`,
+              link: `/frontend/nuxt/url-redirection-with-middleware`
             }
           ]
         },

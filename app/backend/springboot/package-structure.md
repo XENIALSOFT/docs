@@ -158,76 +158,9 @@ Nitro               Api
 /api/auth/sign-in   /auth/sign-in           [credentials]   => [accesstoken, refreshtoken]
 /api/auth/sign-out  /auth/sign-out          [refreshtoken]  => []
 /api/auth/refresh   /auth/refresh           [refreshtoken]  => [accesstoken, refreshtoken]
-/api/auth/token     /auth/refresh-token     [refreshtoken]  => [accesstoken]
+/api/auth/token     /auth/token             [refreshtoken]  => [accesstoken]
 
-/api/users/me       /users/me               []
--->
-
-<!--
-🧠 구조 분석: 인증 & 사용자 정보 분리 전략
-클라이언트 플로우
-리프레시 토큰 쿠키 확인
-
-없다면 "로그아웃 상태"
-
-리프레시 토큰으로 액세스 토큰 요청 (/auth/refresh-access)
-
-성공 시 새 액세스 토큰 발급 (리프레시 토큰은 그대로 유지)
-
-실패 시 → "로그아웃 처리"
-
-액세스 토큰으로 세션 정보 요청 (/auth/me 또는 /users/me)
-
-성공 시 사용자 정보 수신 → 로그인 유지
-
-실패 시 → "로그아웃 처리"
-
-✅ 장점
-항목	설명
-🔒 보안 강화	JWT만으로 인증하지 않고 사용자 정보를 명시적으로 검증
-⚙ 세션 상태 없음	서버는 상태를 저장하지 않음 (stateless)
-🪪 사용자 정보 최신화	JWT에 포함된 오래된 정보 대신 DB 기반 정보 반환 가능
-🔁 갱신 로직 분리	액세스 토큰 재발급과 사용자 정보 조회를 분리 관리
-
-✨ 추천 설계
-1. /auth/refresh-access – 액세스 토큰 재발급
-입력: refreshToken (쿠키 또는 Authorization 헤더)
-
-출력: accessToken (Authorization 헤더 또는 응답 바디)
-
-리프레시 토큰은 로테이션하지 않음 (access-only 갱신)
-
-2. /auth/me – 사용자 세션 정보 조회
-입력: Authorization: Bearer {accessToken}
-
-처리: JWT에서 userId 파싱 → DB 조회
-
-출력: UserInfoResponse (username, nickname, role 등)
-
-java
-복사
-편집
-@GetMapping("/auth/me")
-public ResponseEntity<UserInfoResponse> getMyInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
-    return ResponseEntity.ok(userService.getUserInfo(userDetails.getId()));
-}
-3. /auth/refresh – 액세스 + 리프레시 로테이션
-리프레시 토큰 만료 or 명시적 요청 시 사용
-
-📌 주의할 점
-accessToken이 유효해도, 그 사용자 정보가 DB에서 삭제되었거나 탈퇴된 상태라면 /auth/me는 401 Unauthorized 를 리턴해야 합니다.
-
-로컬스토리지에는 절대 refreshToken 저장 금지 (XSS 위험). 쿠키만 사용하세요 (HttpOnly, Secure 설정).
-
-🎯 요약
-목적	경로	설명
-access 재발급	/auth/refresh-access	refresh 토큰으로 access 발급
-세션 정보 조회	/auth/me	access 토큰 기반 사용자 정보 반환
-완전 재발급	/auth/refresh	refresh & access 로테이션
-
-이 구조는 스프링 시큐리티 + MyBatis + 커스텀 인증 환경에서 매우 안정적이며, OAuth2 로그인에도 쉽게 확장할 수 있습니다.
-
-필요하다면 각 엔드포인트 컨트롤러/서비스/매퍼도 함께 작성해드릴 수 있어요.
+/api/users/me       /users/me               [] => [UserSessionResponse]
 -->
 
 <!--
@@ -240,7 +173,7 @@ access 재발급	/auth/refresh-access	refresh 토큰으로 access 발급
 update 등은 read then write 패턴이 일반적임
 
 public void updateMember(UpdateMemberRequest request) {
-    Member member = memberMapper.findById(request.getId());
+    Member member = memberMapper.selectMemberById(request.getId());
 
     if (member == null) {
         throw new NotFoundException("Member not found");
@@ -250,7 +183,6 @@ public void updateMember(UpdateMemberRequest request) {
         member.setUsername(request.getUsername());
     }
 
-    // Auditing 처리 (AOP나 직접)
     member.setUpdatedBy(SecurityUtils.getCurrentUserId());
 
     memberMapper.update(member);
