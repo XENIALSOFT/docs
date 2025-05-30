@@ -25,7 +25,10 @@ export default defineNuxtRouteMiddleware((to) => {
 
   const target = redirects[to.path]
   if (target) {
-    return navigateTo(target, { redirectCode: 301 })
+    return navigateTo(target, {
+      redirectCode: 301,
+      replace: true
+    });
   }
 })
 ```
@@ -75,7 +78,10 @@ function resolve(
 export default defineNuxtRouteMiddleware((to) => {
   const destination = resolve(to.path, redirects)
   if (destination && destination !== to.path) {
-    return navigateTo(destination, { redirectCode: 301 })
+    return navigateTo(destination, {
+      redirectCode: 301,
+      replace: true
+    });
   }
 })
 ```
