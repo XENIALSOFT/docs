@@ -18,7 +18,7 @@ module.exports = {
       name: 'api',
       cwd: '/var/www/api',
       script: 'java',
-      args: '-jar api-0.0.1-SNAPSHOT.jar --server.port=8080 --spring.profiles.active=production',
+      args: '-Xms512m -Xmx768m -jar api-0.0.1-SNAPSHOT.jar --server.port=8080 --spring.profiles.active=production',
       exec_mode: 'fork',
       instances: 1,
       autorestart: true,
