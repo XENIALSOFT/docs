@@ -155,7 +155,12 @@ function sidebar(): DefaultTheme.Sidebar {
       items: [
         {
           text: `시작하기`,
-          link: `/devops/getting-started`
+          link: `/devops/getting-started`,
+          items: [
+            {
+              text: `운영 전 체크리스트`
+            }
+          ]
         },
         {
           text: `MariaDB`,
@@ -211,7 +216,7 @@ function sidebar(): DefaultTheme.Sidebar {
               link: `/devops/pm2/ecosystem-config`
             },
           ]
-        }
+        },
       ]
     },
     {

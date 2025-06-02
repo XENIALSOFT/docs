@@ -139,7 +139,7 @@ core
   service(FileService)
     1. 조회
     2. 
-  mapper(FileMetadataService)
+  mapper(FileMetadataMapper)
     1. 조회
     2. 삽입
     3. 삭제
