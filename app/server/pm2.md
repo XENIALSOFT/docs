@@ -5,14 +5,13 @@ module.exports = {
       name: 'admin',
       cwd: '/var/www/admin',
       script: './.output/server/index.mjs',
-      env: {
-        PORT: 4000
-      },
+      env: { PORT: 4000 },
       exec_mode: 'cluster',
       instances: 'max',
       interpreter: 'node',
       autorestart: true,
-      watch: false
+      watch: false,
+      max_memory_restart: '300M'
     },
     {
       name: 'api',
@@ -22,20 +21,20 @@ module.exports = {
       exec_mode: 'fork',
       instances: 1,
       autorestart: true,
-      watch: false
+      watch: false,
+      max_memory_restart: '800M'
     },
     {
       name: 'web',
       cwd: '/var/www/web',
       script: './.output/server/index.mjs',
-      env: {
-        PORT: 3000
-      },
+      env: { PORT: 3000 },
       exec_mode: 'cluster',
       instances: 'max',
       interpreter: 'node',
       autorestart: true,
-      watch: false
+      watch: false,
+      max_memory_restart: '300M'
     },
   ]
 }

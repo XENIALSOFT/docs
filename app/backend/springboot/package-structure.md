@@ -129,6 +129,27 @@
 ```
 
 <!--
+파일 관련
+
+core
+  controller(FileController /files)
+    1. 업로드(POST /)
+    2. 다운로드(GET /{fileId})
+    3. 메타정보(GET /{fileId}/json)
+  service(FileService)
+    1. 조회
+    2. 
+  mapper(FileMetadataService)
+    1. 조회
+    2. 삽입
+    3. 삭제
+admin
+  controller(AdminFileController /admin/files)
+    1. 목록 조회(필터 포함)
+
+-->
+
+<!--
  {
   id=4173230255,
   connected_at=2025-05-27T05:12:27Z, 
