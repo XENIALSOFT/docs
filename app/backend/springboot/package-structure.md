@@ -147,6 +147,15 @@ admin
   controller(AdminFileController /admin/files)
     1. 목록 조회(필터 포함)
 
+
+SHA256Utils
+  generate => hash
+
+AES256Utils
+
+Builder로 생성한 객체(불변)에 대한 값 변경 시
+@Builder(toBuilder = true)로 설정 후 toBuilder를 사용하여
+새로운 불변 객체를 복제하여 사용하는 것이 올바르다.
 -->
 
 <!--

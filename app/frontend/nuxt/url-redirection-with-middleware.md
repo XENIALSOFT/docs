@@ -45,8 +45,6 @@ export default defineNuxtRouteMiddleware((to) => {
 
 ```ts
 // middleware/permanent-redirect.global.ts
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-
 export default defineNuxtRouteMiddleware((to) => {
 
   const redirects: Record<string, string> = {
