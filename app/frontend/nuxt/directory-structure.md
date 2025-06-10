@@ -9,6 +9,22 @@
 ```
 
 <!--
+const { data } = await useAsyncData('dashboard', async () => {
+  const [userResult, settingsResult] = await Promise.allSettled([
+    $api('/user/me'),
+    $api('/settings')
+  ]);
+
+  return {
+    user: userResult.status === 'fulfilled' ? userResult.value : null,
+    settings: settingsResult.status === 'fulfilled' ? settingsResult.value : null,
+    userError: userResult.status === 'rejected' ? userResult.reason : null,
+    settingsError: settingsResult.status === 'rejected' ? settingsResult.reason : null
+  };
+});
+-->
+
+<!--
 <script setup lang="ts">
 import { ref } from 'vue'
 
