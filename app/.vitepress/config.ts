@@ -217,6 +217,15 @@ function sidebar(): DefaultTheme.Sidebar {
             },
           ]
         },
+        {
+          text: `젠킨스`,
+          items: [
+            {
+              text: `설치`,
+              link: `/devops/jenkins/installation`
+            }
+          ]
+        }
       ]
     },
     {

@@ -9,7 +9,6 @@ useSeoMeta({
   keywords: '세모아의원, 피부과, 미용, 레이저, 시술',
   author: '세모아의원',
   publisher: '세모아의원',
-  linkCanonical: 'https://next.semoaclinic.com'
 
   // Open Graph
   ogTitle: '세모아의원',
