@@ -129,6 +129,62 @@
 ```
 
 <!--
+
+Article 관련 메모
+
+1. 공지사항
+  1.1. NoticeArticleFilterRequest
+  1.2. NoticeArticleListItemResponse
+
+  1.3. NoticeArticleController
+  1.4. NoticeArticleService
+    1.4.1. ArticleService
+    1.4.2. ArticleLocalizedService
+
+
+1. NoticeArticle
+  1.1. 
+2. PressArticle
+  2.1. 
+3. EventArticle
+  3.1.
+4. TreatmentArticle
+  4.1.
+5. Article
+6. ArticleLocalized
+
+시술 정보 관련 메모
+
+1. 테이블 
+  - procedure
+    - id(nano)
+
+시술 상품 정보 관련 메모
+
+1. 테이블
+  - procedure
+
+시술 후 주의사항 관련 메모
+
+1. 테이블
+  - procedure_caution
+    - id(auto)
+    - procedure_id(nano)
+
+
+
+카드 정보 관련 메모
+
+1. 테이블
+  - card_installment_benefit
+2. domain & dto
+  - CardInstallmentBenefit
+  - CardInstallmentBenefitFilterRequest
+  - CardInstallmentBenefitResponse
+
+-->
+
+<!--
 파일 관련
 
 core
