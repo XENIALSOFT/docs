@@ -42,8 +42,18 @@ sudo vi /usr/lib/systemd/system/jenkins.service
 Environment="JENKINS_PORT=8000"
 ```
 
+```sh
+sudo systemctl daemon-reload
+```
+
 ## 실행
 
 ```sh
 sudo systemctl start jenkins
+```
+
+## 상태
+
+```sh
+sudo systemctl status jenkins
 ```
