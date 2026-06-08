@@ -25,7 +25,7 @@ sudo apt install jenkins
 
 - `fontconfig` 설치
 ```sh
-sudo apt-get update && sudo apt-get install fontconfig
+sudo apt update && sudo apt install fontconfig
 ```
 
 ## 포트 변경
