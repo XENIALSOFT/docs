@@ -90,6 +90,32 @@ sudo apt update
 sudo apt install -y java-21-amazon-corretto-jdk
 ```
 
+### Amazon Corretto 25
+
+```sh
+sudo apt install -y wget gnupg
+```
+
+- `GPG` 키 가져오기
+```sh
+wget -O - https://apt.corretto.aws/corretto.key | sudo gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg
+```
+
+- `APT` 저장소 추가
+```sh
+echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" | sudo tee /etc/apt/sources.list.d/corretto.list
+```
+
+- `APT` 업데이트
+```sh
+sudo apt update
+```
+
+- `JDK21` 설치
+```sh
+sudo apt install -y java-25-amazon-corretto-jdk
+```
+
 ## 방화벽 설정
 
 - `80` 포트
