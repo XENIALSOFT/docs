@@ -68,42 +68,4 @@ pm2 start ecosystem.config.js --env production
 
 ## `pm2-logrotate`와 함께 사용하는 방법
 
-`pm2-logrotate`는 설정을 ecosystem 파일에 직접 넣는 것이 아니라 `pm2 set` 명령어를 통해 전역 설정합니다. 하지만 `ecosystem.config.js`에서 **로그 파일 경로와 로그 날짜 포맷 등은 지정**할 수 있어 함께 잘 작동하도록 구성할 수 있습니다.
-
-```js
-module.exports = {
-  apps: [
-    {
-      name: "api-server",
-      script: "./server.js",
-      instances: "max",
-      exec_mode: "cluster",
-      watch: true,
-      ignore_watch: ["node_modules", "logs"],
-      max_memory_restart: "300M",
-      error_file: "./logs/api-server-error.log",
-      out_file: "./logs/api-server-out.log",
-      log_date_format: "YYYY-MM-DD HH:mm Z",
-      time: true,
-    }
-  ]
-};
-```
-
-그리고 `logrotate` 설정은 아래처럼 명령어로 지정합니다.
-
-```sh
-pm2 install pm2-logrotate
-pm2 set pm2-logrotate:max_size 10M
-pm2 set pm2-logrotate:retain 7
-pm2 set pm2-logrotate:compress true
-pm2 set pm2-logrotate:rotateInterval '0 0 * * *'
-```
-
-## 요약
-| 장점              | 내용                                     |
-| --------------- | -------------------------------------- |
-| 📁 구성 파일화       | 설정 내용을 코드로 정리해 관리 가능                   |
-| 🔄 반복 실행 용이     | `pm2 restart`, `pm2 deploy` 등에 유리      |
-| 🔧 logrotate 연동 | 로그 파일 경로/포맷 설정 → logrotate가 자동으로 처리 가능 |
-| 🌐 환경 분리        | dev/prod 환경에 따라 다른 설정 적용 가능            |
+[`pm2-logrotate`](./logrotate.md)는 설정을 ecosystem 파일에 직접 넣는 것이 아니라 `pm2 set` 명령어를 통해 전역 설정합니다. 하지만 `ecosystem.config.js`에서 **로그 파일 경로와 로그 날짜 포맷 등은 지정**할 수 있어 함께 잘 작동하도록 구성할 수 있습니다.

@@ -208,12 +208,12 @@ function sidebar(): DefaultTheme.Sidebar {
               link: `/devops/pm2/getting-started`
             },
             {
-              text: `로그관리`,
-              link: `/devops/pm2/logrotate`
+              text: `Ecosystem`,
+              link: `/devops/pm2/ecosystem-config`
             },
             {
-              text: `ecosystem.config.js`,
-              link: `/devops/pm2/ecosystem-config`
+              text: `로그관리`,
+              link: `/devops/pm2/logrotate`
             },
           ]
         },

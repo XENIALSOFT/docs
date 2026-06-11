@@ -6,6 +6,13 @@
 
 `pm2-logrotate`는 `PM2` 로그 파일의 용량이 커지는 것을 방지하기 위해 **자동으로 로그를 순환(rotate)** 하고, **오래된 로그를 삭제**해주는 `PM2`의 외부 모듈입니다.
 
+| 장점              | 내용                                     |
+| --------------- | -------------------------------------- |
+| 📁 구성 파일화       | 설정 내용을 코드로 정리해 관리 가능                   |
+| 🔄 반복 실행 용이     | `pm2 restart`, `pm2 deploy` 등에 유리      |
+| 🔧 logrotate 연동 | 로그 파일 경로/포맷 설정 → logrotate가 자동으로 처리 가능 |
+| 🌐 환경 분리        | dev/prod 환경에 따라 다른 설정 적용 가능            |
+
 ## 설치
 
 ```sh
@@ -31,10 +38,17 @@ pm2 install pm2-logrotate
 ## 설정 예시
 
 ```sh
+# 로그 파일 하나가 최대 20MB를 넘지 않도록 설정
 pm2 set pm2-logrotate:max_size 20M
+
+# 과거 로그를 최대 7개까지 보관할지 설정
 pm2 set pm2-logrotate:retain 7
+
+# 로그를 압축(gzip)해서 저장할지 여부(디스크 절약에 유용)
 pm2 set pm2-logrotate:compress true
-pm2 set pm2-logrotate:rotateInterval '0 0 * * *'  # 매일 자정에 회전
+
+# 매일 자정에 무조건 로그를 분할(크론탭 표현식)
+pm2 set pm2-logrotate:rotateInterval '0 0 * * *'
 ```
 
 ## 로그 파일 저장 위치
