@@ -197,7 +197,11 @@ function sidebar(): DefaultTheme.Sidebar {
             {
               text: `파일 업로드 용량 제한 설정`,
               link: `/devops/nginx/file-upload-limit`
-            }
+            },
+            {
+              text: `X-Accel 대용량 파일 전송`,
+              link: `/devops/nginx/x-accel`
+            },
           ]
         },
         {
