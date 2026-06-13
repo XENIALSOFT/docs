@@ -15,8 +15,8 @@ echo " Linux Swap Memory (4GB) Setup Script    "
 echo "========================================="
 ```
 
-# 1. 기존 스왑 파일 존재 유무 확인 및 생성
 ```bash
+# 1. 기존 스왑 파일 존재 유무 확인 및 생성
 if [ -f /swapfile ]; then
     echo "[안내] 이미 /swapfile이 존재합니다. 세팅을 건너뜁니다."
 else
@@ -38,11 +38,8 @@ fi
 echo "-----------------------------------------"
 echo " 커널 Swappiness 최적화 설정 (SSD I/O 보호)"
 echo "-----------------------------------------"
-```
 
 # 2. Swappiness 값을 10으로 하향 조정 (RAM 임계점 도달 시에만 Swap 사용)
-
-```bash
 CURRENT_SWAP_VAL=$(cat /proc/sys/vm/swappiness)
 echo "[현재 설정값] swappiness = ${CURRENT_SWAP_VAL}"
 
@@ -63,7 +60,7 @@ echo "========================================="
 free -h
 ```
 
-# 3. 수동 명령줄 세팅 가이드
+## 수동 명령줄 세팅 가이드
 
 스크립트를 쓰지 않고 터미널에서 한 줄씩 직접 실행하려면 아래 커맨드를 순차적으로 입력합니다.
 
