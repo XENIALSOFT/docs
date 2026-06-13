@@ -229,6 +229,19 @@ function sidebar(): DefaultTheme.Sidebar {
               link: `/devops/jenkins/installation`
             }
           ]
+        },
+        {
+          text: 'AWS & 인프라 운영',
+          items: [
+            { 
+              text: 'Lightsail 인스턴스 프리징 원인 분석 및 해결',
+              link: '/devops/lightsail/lightsail-memory-pressure-freezing'
+            },
+            { 
+              text: 'Linux Swap 메모리 자동화 스크립트',
+              link: '/devops/lightsail/linux-swap-setup-script'
+            }
+          ]
         }
       ]
     },
