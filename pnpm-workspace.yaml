@@ -1,0 +1,10 @@
+peerDependencyRules:
+  ignoreMissing:
+    - "@algolia/client-search"
+    - "search-insights"
+
+onlyBuiltDependencies:
+  - "esbuild"
+
+allowBuilds:
+  esbuild: true
