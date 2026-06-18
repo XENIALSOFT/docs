@@ -1,8 +1,6 @@
-# Xenial 서버 설치·배포 체크리스트
+# 서버 설치·배포 체크리스트
 
 > **대상 스택**: MariaDB · Nginx · Spring Boot API · Nuxt Admin · Nuxt Site(01_alpha) · PM2 · Certbot  
-> **관련 저장소**: [`xenial-api`](../README.md), [`xenial-web`](../../xenial-web/README.md)  
-> **마지막 기준**: 2026-06-18 (코드베이스 env·배포 워크플로 기준)
 
 ---
 
@@ -135,8 +133,6 @@ API 기본값: `STORAGE_ROOT=/app/data/storage`
 | `OAUTH_PUBLIC_BASE_URL` | **Site 공개 URL** (예: `https://example.com`) — 소셜 로그인 redirect |
 | `LICENSE_KEY` | **prod 필수** — 개발사 발급 compact JWS |
 
-환경 변수 전체 예시는 [`env.example`](../env.example)를 참고하세요.
-
 ### 4.3 선택 환경 변수
 
 | 변수 | 기본값 | 설명 |
@@ -185,7 +181,7 @@ API 기본값: `STORAGE_ROOT=/app/data/storage`
 
 ### 4.5 라이선스 (고객 prod)
 
-- [ ] JWS는 **개발사 PC에서 오프라인 발급** (`generateLicenseKey`) — 상세: [`docs/requirements/license.md`](requirements/license.md)
+- [ ] JWS는 **개발사 PC에서 오프라인 발급** (`generateLicenseKey`)
 - [ ] `--site-origin`, `--admin-origin`이 실제 HTTPS 도메인과 일치
 - [ ] 기능 확대(upsell) 시 `LICENSE_KEY` 교체 후 `pm2 restart api`
 
