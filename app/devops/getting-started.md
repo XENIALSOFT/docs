@@ -64,32 +64,6 @@ sudo apt install -y nginx
 sudo apt install -y certbot python3-certbot-nginx
 ```
 
-### Amazon Corretto 21
-
-```sh
-sudo apt install -y wget gnupg
-```
-
-- `GPG` 키 가져오기
-```sh
-wget -O- https://apt.corretto.aws/corretto.key | sudo gpg --dearmor -o /usr/share/keyrings/corretto-archive-keyring.gpg
-```
-
-- `APT` 저장소 추가
-```sh
-echo "deb [signed-by=/usr/share/keyrings/corretto-archive-keyring.gpg] https://apt.corretto.aws stable main" | sudo tee /etc/apt/sources.list.d/corretto.list
-```
-
-- `APT` 업데이트
-```sh
-sudo apt update
-```
-
-- `JDK21` 설치
-```sh
-sudo apt install -y java-21-amazon-corretto-jdk
-```
-
 ### Amazon Corretto 25
 
 ```sh
@@ -111,7 +85,7 @@ echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corre
 sudo apt update
 ```
 
-- `JDK21` 설치
+- `JDK25` 설치
 ```sh
 sudo apt install -y java-25-amazon-corretto-jdk
 ```
@@ -148,7 +122,7 @@ sudo apt install iptables-persistent
 timedatectl
 ```
 
-```
+```text
                Local time: Thu 2025-03-13 09:39:42 KST
            Universal time: Thu 2025-03-13 00:39:42 UTC
                  RTC time: Thu 2025-03-13 00:39:42
@@ -165,9 +139,9 @@ System clock synchronized: yes
 
 ### 사용 가능한 타임존 목록 확인
 
-OS에서 지원하는 타임존 목록을 보려면 다음 명령어를 실행합니다.
+OS에서 지원하는 타임존 목록을 확인합니다.
 
-- 전체 타임존 목록
+- 전체 타임존 목록 보기 (종료하려면 q 입력)
 ```sh
 timedatectl list-timezones
 ```
@@ -179,13 +153,13 @@ timedatectl list-timezones | grep Seoul
 
 ### 타임존 변경
 
-1. 특정 타임존로 변경
+1. 대한민국 표준시(KST)로 변경
 
 ```sh
 sudo timedatectl set-timezone Asia/Seoul
 ```
 
-2. `UTC`로 변경
+2. 세계 표준시(UTC)로 변경 (해외 리전 서버 권장)
 
 ```sh
 sudo timedatectl set-timezone UTC

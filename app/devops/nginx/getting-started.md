@@ -51,6 +51,6 @@ A 레코드와 CNAME 레코드의 차이
 
 |목적|사용 레코드|설명|
 |--|--|--|
-|도메인 → IP 연결|A 레코드|aforclinic.xenialsoft.com → 123.123.123.123|
-|도메인 → 도메인 연결|CNAME 레코드|clinic.xenialsoft.com → aforclinic.xenialsoft.com|
+|도메인 → IP 연결|A 레코드|alpha.xenialsoft.com → 123.123.123.123|
+|도메인 → 도메인 연결|CNAME 레코드|bravo.xenialsoft.com → alpha.xenialsoft.com|
 :::

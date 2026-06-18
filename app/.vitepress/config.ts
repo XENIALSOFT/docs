@@ -126,27 +126,27 @@ function sidebar(): DefaultTheme.Sidebar {
       text: `백엔드`,
       items: [
         {
-          text: `스프링부트`,
-          items: [
-            {
-              text: `소개`,
-              link: `/backend/springboot/intro`
-            },
-            {
-              text: `패키지 구조`,
-              link: `/backend/springboot/package-structure`,
-              items: [
-                {
-                  text: `config`,
-                  link: `/backend/springboot/package-structure/config`
-                }
-              ]
-            },
-            {
-              text: `순번 설정`,
-              link: `/backend/springboot/rownumber`
-            }
-          ]
+          // text: `스프링부트`,
+          // items: [
+          //   {
+          //     text: `소개`,
+          //     link: `/backend/springboot/intro`
+          //   },
+          //   {
+          //     text: `패키지 구조`,
+          //     link: `/backend/springboot/package-structure`,
+          //     items: [
+          //       {
+          //         text: `config`,
+          //         link: `/backend/springboot/package-structure/config`
+          //       }
+          //     ]
+          //   },
+          //   {
+          //     text: `순번 설정`,
+          //     link: `/backend/springboot/rownumber`
+          //   }
+          // ]
         }
       ]
     },
@@ -158,7 +158,8 @@ function sidebar(): DefaultTheme.Sidebar {
           link: `/devops/getting-started`,
           items: [
             {
-              text: `운영 전 체크리스트`
+              text: `운영 전 체크리스트`,
+              link: `/devops/server-setup-checklist`,
             }
           ]
         },
