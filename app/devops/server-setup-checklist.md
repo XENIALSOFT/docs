@@ -1,6 +1,6 @@
 # 서버 설치·배포 체크리스트
 
-> **대상 스택**: MariaDB · Nginx · Spring Boot API · Nuxt Admin · Nuxt Site(01_alpha) · PM2 · Certbot  
+> **대상 스택**: MariaDB · Nginx · Spring Boot API · Nuxt Admin · Nuxt Site · PM2 · Certbot  
 
 ---
 
@@ -231,7 +231,7 @@ API 기본값: `STORAGE_ROOT=/app/data/storage`
 
 ---
 
-## 6. Nuxt Site — 01_alpha (apps/templates/01_alpha)
+## 6. Nuxt Site
 
 ### 6.1 배포
 
@@ -504,7 +504,7 @@ certbot --nginx -d example.com -d admin.example.com
 |----------|--------|-----------|-----|
 | `deploy.yaml` (API) | `api-0.0.1-SNAPSHOT.jar` | `/var/www/api` | `pm2 restart api` |
 | `deploy-admin.yaml` | `apps/admin/.output` tarball | `/var/www/admin` | `pm2 restart admin` |
-| `deploy-template-alpha.yaml` | `01_alpha/.output` tarball | `/var/www/web` | `pm2 restart web` |
+| `deploy-web.yaml` | `apps/sites/**/*/.output` tarball | `/var/www/web` | `pm2 restart web` |
 
 - [ ] Lightsail(또는 서버) SSH 시크릿 등록
 - [ ] 배포 후 §11 검증 재실행
